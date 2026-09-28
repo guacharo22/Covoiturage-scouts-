@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Covoiturage — Weekend Scout 🐺</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f7f5f0;
+  color: #1a1a18;
+  min-height: 100vh;
+}
+header {
+  background: #fff;
+  border-bottom: 1px solid #e0ddd6;
+  padding: 1.25rem 1.5rem 1rem;
+}
+header h1 { font-size: 1.3rem; font-weight: 600; }
+header p { font-size: 0.875rem; color: #6b6b67; margin-top: 0.25rem; line-height: 1.5; }
+.info-box {
+  margin: 1rem;
+  background: #e8f5ee;
+  border: 1px solid #9dd4b3;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: #1a5c36;
+  line-height: 1.5;
+}
+main { padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
+.add-btn {
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  width: 100%; padding: 0.75rem;
+  background: #2c6e49; color: white;
+  border: none; border-radius: 10px;
+  font-size: 0.95rem; font-weight: 500;
+  cursor: pointer;
+}
+.add-btn:hover { background: #245a3c; }
+.section-title {
+  font-size: 0.8rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: #6b6b67; margin: 0.25rem 0 -0.25rem;
+}
+.card {
+  background: #fff; border: 1px solid #e0ddd6;
+  border-radius: 10px; overflow: hidden;
+}
+.card-header {
+  padding: 0.85rem 1rem;
+  display: flex; align-items: center; gap: 0.75rem;
+  border-bottom: 1px solid #e0ddd6;
+}
+.avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: #e8f5ee; color: #2c6e49;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 1rem; flex-shrink: 0;
+}
+.avatar.cannot { background: #fef2f2; color: #dc2626; }
+.card-name { font-weight: 600; font-size: 0.95rem; }
+.badge {
+  margin-left: auto; font-size: 0.75rem; font-weight: 500;
+  padding: 0.2rem 0.6rem; border-radius: 99px; white-space: nowrap;
+}
+.badge.green { background: #e8f5ee; color: #1a5c36; border: 1px solid #9dd4b3; }
+.badge.full { background: #f3f4f6; color: #6b7280; border: 1px solid #d1d5db; }
+.badge.cannot { background: #fef2f2; color: #dc2626; border: 1px solid #fca5a5; }
+.card-body { padding: 0.75rem 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.info-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: #6b6b67; }
+.info-row span { color: #1a1a18; }
+.note-text {
+  font-size: 0.85rem; color: #6b6b67; font-style: italic;
+  line-height: 1.5; background: #f7f5f0;
+  border-radius: 6px; padding: 0.6rem 0.75rem; margin-top: 0.25rem;
+}
+.card-actions { padding: 0 1rem 0.75rem; display: flex; gap: 0.5rem; }
+.btn-full {
+  flex: 1; padding: 0.55rem;
+  border: 1px solid #e0ddd6; border-radius: 7px;
+  background: #f7f5f0; color: #6b6b67;
+  font-size: 0.82rem; cursor: pointer; font-weight: 500;
+}
+.btn-full:hover { border-color: #d1d5db; color: #1a1a18; }
+.btn-full.active { background: #f3f4f6; color: #6b7280; border-color: #d1d5db; }
+.btn-del {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #fca5a5; border-radius: 7px;
+  background: #fef2f2; color: #dc2626;
+  font-size: 0.82rem; cursor: pointer;
+}
+.empty { text-align: center; padding: 2rem 1rem; color: #6b6b67; font-size: 0.9rem; }
+.loading { text-align: center; padding: 3rem 1rem; color: #6b6b67; }
+.cannot-card .card-header { background: #fef2f2; }
+
+/* Modal */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; padding: 1rem;
+}
+.overlay.hidden { display: none; }
+.modal {
+  background: #fff; border-radius: 14px;
+  width: 100%; max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+.modal-header {
+  padding: 1.1rem 1.25rem 0.9rem;
+  border-bottom: 1px solid #e0ddd6;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.modal-header h2 { font-size: 1rem; font-weight: 600; }
+.close-btn { background: none; border: none; color: #6b6b67; font-size: 1.4rem; cursor: pointer; line-height: 1; padding: 0 0.2rem; }
+.modal-body { padding: 1.1rem 1.25rem; display: flex; flex-direction: column; gap: 0.9rem; }
+.field label { display: block; font-size: 0.8rem; font-weight: 500; color: #6b6b67; margin-bottom: 0.3rem; }
+.field input, .field textarea, .field select {
+  width: 100%; padding: 0.6rem 0.75rem;
+  border: 1px solid #e0ddd6; border-radius: 7px;
+  background: #f7f5f0; color: #1a1a18;
+  font-size: 0.9rem; font-family: inherit; outline: none;
+}
+.field input:focus, .field textarea:focus, .field select:focus { border-color: #2c6e49; }
+.field textarea { resize: vertical; min-height: 70px; }
+.type-toggle { display: flex; gap: 0.5rem; }
+.type-btn {
+  flex: 1; padding: 0.55rem;
+  border: 1px solid #e0ddd6; border-radius: 7px;
+  background: #f7f5f0; color: #6b6b67;
+  font-size: 0.82rem; cursor: pointer; font-weight: 500; text-align: center;
+}
+.type-btn.sel-green { background: #e8f5ee; color: #1a5c36; border-color: #9dd4b3; }
+.type-btn.sel-red { background: #fef2f2; color: #dc2626; border-color: #fca5a5; }
+.modal-footer { padding: 0 1.25rem 1.1rem; display: flex; gap: 0.5rem; }
+.btn-cancel { flex: 1; padding: 0.65rem; border: 1px solid #e0ddd6; border-radius: 7px; background: none; color: #6b6b67; font-size: 0.9rem; cursor: pointer; }
+.btn-submit { flex: 2; padding: 0.65rem; border: none; border-radius: 7px; background: #2c6e49; color: white; font-size: 0.9rem; font-weight: 500; cursor: pointer; }
+.btn-submit:hover { background: #245a3c; }
+.fields-cannot { display: none; flex-direction: column; gap: 0.9rem; }
+.fields-cannot.visible { display: flex; }
+.fields-driver { display: flex; flex-direction: column; gap: 0.9rem; }
+.fields-driver.hidden { display: none; }
+.err { font-size: 0.8rem; color: #dc2626; margin-top: 0.2rem; display: none; }
+.err.show { display: block; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🐺 Covoiturage weekend scout</h1>
+  <p>Organisez les trajets ensemble — contactez-vous directement pour fixer le point de rendez-vous.</p>
+</header>
+
+<div class="info-box">
+  <strong>Comment ça marche :</strong> ajoutez votre louveteau ci-dessous. Si vous pouvez conduire, indiquez le nombre de places et votre numéro. Si votre voiture est pleine, marquez-la comme complète. Contactez les autres parents par téléphone !
+</div>
+
+<main id="main">
+  <div class="loading">Chargement…</div>
+</main>
+
+<!-- Modal -->
+<div class="overlay hidden" id="overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">Ajouter mon enfant</h2>
+      <button class="close-btn" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>Prénom et nom du louveteau *</label>
+        <input type="text" id="f-name" placeholder="ex. Théo Dupont" maxlength="60">
+        <div class="err" id="err-name">Veuillez entrer le nom du louveteau.</div>
+      </div>
+      <div class="field">
+        <label>Votre situation *</label>
+        <div class="type-toggle">
+          <button class="type-btn sel-green" id="btn-driver" onclick="setType('driver')">🚗 Je peux conduire</button>
+          <button class="type-btn" id="btn-cannot" onclick="setType('cannot')">❌ Je ne peux pas</button>
+        </div>
+      </div>
+      <div class="fields-driver" id="fields-driver">
+        <div class="field">
+          <label>Places disponibles (hors conducteur) *</label>
+          <select id="f-seats">
+            <option value="1">1 place</option>
+            <option value="2">2 places</option>
+            <option value="3">3 places</option>
+            <option value="4">4 places</option>
+            <option value="5">5 places</option>
+            <option value="6">6 places</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Numéro de téléphone *</label>
+          <input type="tel" id="f-phone" placeholder="ex. 0470 00 00 00" maxlength="20">
+          <div class="err" id="err-phone">Veuillez entrer votre numéro de téléphone.</div>
+        </div>
+      </div>
+      <div class="fields-cannot" id="fields-cannot">
+        <div class="field">
+          <label>Message (optionnel)</label>
+          <textarea id="f-note" placeholder="ex. Je travaille ce weekend, merci de contacter les autres parents." maxlength="200"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Annuler</button>
+      <button class="btn-submit" onclick="submitEntry()">Ajouter</button>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, push, update, remove, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCL-qZ7QBo6xq5npdzTbeu5FCJJa_arR5E",
+    authDomain: "covoiturage-week-end.firebaseapp.com",
+    databaseURL: "https://covoiturage-week-end-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "covoiturage-week-end",
+    storageBucket: "covoiturage-week-end.firebasestorage.app",
+    messagingSenderId: "942734513986",
+    appId: "1:942734513986:web:f6a5d8ac92ed60f422dadb"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const entriesRef = ref(db, 'entries');
+
+  // Expose to global scope
+  window._db = db;
+  window._ref = ref;
+  window._push = push;
+  window._update = update;
+  window._remove = remove;
+  window._entriesRef = entriesRef;
+
+  // Listen for changes
+  onValue(entriesRef, (snapshot) => {
+    const data = snapshot.val();
+    const entries = data ? Object.entries(data).map(([id, v]) => ({ id, ...v })) : [];
+    entries.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+    window._entries = entries;
+    render(entries);
+  });
+</script>
+
+<script>
+  let currentType = 'driver';
+
+  function esc(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function initials(name) {
+    return name.trim().split(/\s+/).slice(0,2).map(w => w[0]).join('').toUpperCase();
+  }
+
+  function setType(t) {
+    currentType = t;
+    document.getElementById('btn-driver').className = 'type-btn' + (t === 'driver' ? ' sel-green' : '');
+    document.getElementById('btn-cannot').className = 'type-btn' + (t === 'cannot' ? ' sel-red' : '');
+    document.getElementById('fields-driver').className = 'fields-driver' + (t === 'driver' ? '' : ' hidden');
+    document.getElementById('fields-cannot').className = 'fields-cannot' + (t === 'cannot' ? ' visible' : '');
+    document.getElementById('modal-title').textContent = t === 'driver' ? 'Ajouter mon enfant' : 'Signaler que je ne peux pas conduire';
+  }
+
+  function openModal() {
+    document.getElementById('overlay').classList.remove('hidden');
+    document.getElementById('f-name').value = '';
+    document.getElementById('f-phone').value = '';
+    document.getElementById('f-note').value = '';
+    document.getElementById('err-name').classList.remove('show');
+    document.getElementById('err-phone').classList.remove('show');
+    setType('driver');
+    setTimeout(() => document.getElementById('f-name').focus(), 100);
+  }
+
+  function closeModal() {
+    document.getElementById('overlay').classList.add('hidden');
+  }
+
+  document.addEventListener('click', function(e) {
+    if (e.target.id === 'overlay') closeModal();
+  });
+
+  function submitEntry() {
+    const name = document.getElementById('f-name').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    const note = document.getElementById('f-note').value.trim();
+    const seats = parseInt(document.getElementById('f-seats').value);
+    let valid = true;
+
+    if (!name) { document.getElementById('err-name').classList.add('show'); valid = false; }
+    else { document.getElementById('err-name').classList.remove('show'); }
+
+    if (currentType === 'driver' && !phone) { document.getElementById('err-phone').classList.add('show'); valid = false; }
+    else { document.getElementById('err-phone').classList.remove('show'); }
+
+    if (!valid) return;
+
+    const entry = {
+      name, type: currentType,
+      seats: currentType === 'driver' ? seats : 0,
+      phone: currentType === 'driver' ? phone : '',
+      note: currentType === 'cannot' ? note : '',
+      full: false,
+      createdAt: Date.now()
+    };
+
+    if (window._push && window._entriesRef) {
+      window._push(window._entriesRef, entry);
+    }
+    closeModal();
+  }
+
+  function toggleFull(id, val) {
+    if (window._update && window._ref && window._db) {
+      window._update(window._ref(window._db, 'entries/' + id), { full: val });
+    }
+  }
+
+  function deleteEntry(id) {
+    if (!confirm('Supprimer cette entrée ?')) return;
+    if (window._remove && window._ref && window._db) {
+      window._remove(window._ref(window._db, 'entries/' + id));
+    }
+  }
+
+  function render(entries) {
+    const main = document.getElementById('main');
+    const drivers = entries.filter(e => e.type === 'driver');
+    const cannots = entries.filter(e => e.type === 'cannot');
+
+    let html = `<button class="add-btn" onclick="openModal()">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Ajouter mon enfant
+    </button>`;
+
+    if (entries.length === 0) {
+      html += `<div class="empty">Aucune inscription pour l'instant.<br>Soyez le premier à vous inscrire !</div>`;
+    } else {
+      if (drivers.length > 0) {
+        html += `<div class="section-title">🚗 Parents conducteurs (${drivers.length})</div>`;
+        for (const e of drivers) {
+          const full = !!e.full;
+          html += `
+          <div class="card">
+            <div class="card-header">
+              <div class="avatar">${initials(e.name)}</div>
+              <div class="card-name">${esc(e.name)}</div>
+              <span class="badge ${full ? 'full' : 'green'}">${full ? '🚫 Complet' : '✅ Disponible'}</span>
+            </div>
+            <div class="card-body">
+              <div class="info-row">
+                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>${e.seats} place${e.seats > 1 ? 's' : ''} disponible${e.seats > 1 ? 's' : ''}</span>
+              </div>
+              <div class="info-row">
+                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 10.07 19.79 19.79 0 0 1 1.63 1.44 2 2 0 0 1 3.6 0h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 7.91a16 16 0 0 0 6 6l.27-.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16z"/></svg>
+                <span>${esc(e.phone)}</span>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="btn-full${full ? ' active' : ''}" onclick="toggleFull('${e.id}', ${!full})">
+                ${full ? '✅ Marquer disponible' : '🚫 Voiture complète'}
+              </button>
+              <button class="btn-del" onclick="deleteEntry('${e.id}')">🗑️</button>
+            </div>
+          </div>`;
+        }
+      }
+
+      if (cannots.length > 0) {
+        html += `<div class="section-title">❌ Ne peuvent pas amener leur enfant (${cannots.length})</div>`;
+        for (const e of cannots) {
+          html += `
+          <div class="card cannot-card">
+            <div class="card-header">
+              <div class="avatar cannot">${initials(e.name)}</div>
+              <div class="card-name">${esc(e.name)}</div>
+              <span class="badge cannot">Besoin d'une place</span>
+            </div>
+            ${e.note ? `<div class="card-body"><div class="note-text">${esc(e.note)}</div></div>` : ''}
+            <div class="card-actions">
+              <button class="btn-del" onclick="deleteEntry('${e.id}')">🗑️ Retirer</button>
+            </div>
+          </div>`;
+        }
+      }
+    }
+
+    main.innerHTML = html;
+  }
+</script>
+</body>
+</html>
