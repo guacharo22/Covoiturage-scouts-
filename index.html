@@ -3,137 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Covoiturage — Weekend Scout 🐺</title>
+<title>Covoiturage — Weekend Louveteaux 🐺</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: #f7f5f0;
-  color: #1a1a18;
-  min-height: 100vh;
-}
-header {
-  background: #fff;
-  border-bottom: 1px solid #e0ddd6;
-  padding: 1.25rem 1.5rem 1rem;
-}
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f7f5f0; color: #1a1a18; min-height: 100vh; }
+header { background: #fff; border-bottom: 1px solid #e0ddd6; padding: 1.25rem 1.5rem 1rem; }
 header h1 { font-size: 1.3rem; font-weight: 600; }
 header p { font-size: 0.875rem; color: #6b6b67; margin-top: 0.25rem; line-height: 1.5; }
-.info-box {
-  margin: 1rem;
-  background: #e8f5ee;
-  border: 1px solid #9dd4b3;
-  border-radius: 10px;
-  padding: 0.75rem 1rem;
-  font-size: 0.85rem;
-  color: #1a5c36;
-  line-height: 1.5;
-}
+.info-box { margin: 1rem; background: #e8f5ee; border: 1px solid #9dd4b3; border-radius: 10px; padding: 0.85rem 1rem; font-size: 0.85rem; color: #1a5c36; line-height: 1.6; }
+.info-box strong { font-weight: 600; }
 main { padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
-.add-btn {
-  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-  width: 100%; padding: 0.75rem;
-  background: #2c6e49; color: white;
-  border: none; border-radius: 10px;
-  font-size: 0.95rem; font-weight: 500;
-  cursor: pointer;
-}
+.add-btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; padding: 0.75rem; background: #2c6e49; color: white; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 500; cursor: pointer; }
 .add-btn:hover { background: #245a3c; }
-.section-title {
-  font-size: 0.8rem; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.06em;
-  color: #6b6b67; margin: 0.25rem 0 -0.25rem;
-}
-.card {
-  background: #fff; border: 1px solid #e0ddd6;
-  border-radius: 10px; overflow: hidden;
-}
-.card-header {
-  padding: 0.85rem 1rem;
-  display: flex; align-items: center; gap: 0.75rem;
-  border-bottom: 1px solid #e0ddd6;
-}
-.avatar {
-  width: 40px; height: 40px; border-radius: 50%;
-  background: #e8f5ee; color: #2c6e49;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 600; font-size: 1rem; flex-shrink: 0;
-}
-.avatar.cannot { background: #fef2f2; color: #dc2626; }
+.section-title { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #6b6b67; margin: 0.25rem 0 -0.25rem; }
+.card { background: #fff; border: 1px solid #e0ddd6; border-radius: 10px; overflow: hidden; }
+.card-header { padding: 0.85rem 1rem; display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid #e0ddd6; }
+.avatar { width: 40px; height: 40px; border-radius: 50%; background: #e8f5ee; color: #2c6e49; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1rem; flex-shrink: 0; }
+.avatar.cannot { background: #eff6ff; color: #1d4ed8; }
 .card-name { font-weight: 600; font-size: 0.95rem; }
-.badge {
-  margin-left: auto; font-size: 0.75rem; font-weight: 500;
-  padding: 0.2rem 0.6rem; border-radius: 99px; white-space: nowrap;
-}
+.badge { margin-left: auto; font-size: 0.75rem; font-weight: 500; padding: 0.2rem 0.6rem; border-radius: 99px; white-space: nowrap; }
 .badge.green { background: #e8f5ee; color: #1a5c36; border: 1px solid #9dd4b3; }
 .badge.full { background: #f3f4f6; color: #6b7280; border: 1px solid #d1d5db; }
-.badge.cannot { background: #fef2f2; color: #dc2626; border: 1px solid #fca5a5; }
+.badge.blue { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
 .card-body { padding: 0.75rem 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
 .info-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: #6b6b67; }
 .info-row span { color: #1a1a18; }
-.note-text {
-  font-size: 0.85rem; color: #6b6b67; font-style: italic;
-  line-height: 1.5; background: #f7f5f0;
-  border-radius: 6px; padding: 0.6rem 0.75rem; margin-top: 0.25rem;
-}
+.note-text { font-size: 0.85rem; color: #6b6b67; font-style: italic; line-height: 1.5; background: #f7f5f0; border-radius: 6px; padding: 0.6rem 0.75rem; }
 .card-actions { padding: 0 1rem 0.75rem; display: flex; gap: 0.5rem; }
-.btn-full {
-  flex: 1; padding: 0.55rem;
-  border: 1px solid #e0ddd6; border-radius: 7px;
-  background: #f7f5f0; color: #6b6b67;
-  font-size: 0.82rem; cursor: pointer; font-weight: 500;
-}
-.btn-full:hover { border-color: #d1d5db; color: #1a1a18; }
+.btn-full { flex: 1; padding: 0.55rem; border: 1px solid #e0ddd6; border-radius: 7px; background: #f7f5f0; color: #6b6b67; font-size: 0.82rem; cursor: pointer; font-weight: 500; }
+.btn-full:hover { color: #1a1a18; }
 .btn-full.active { background: #f3f4f6; color: #6b7280; border-color: #d1d5db; }
-.btn-del {
-  padding: 0.55rem 0.75rem;
-  border: 1px solid #fca5a5; border-radius: 7px;
-  background: #fef2f2; color: #dc2626;
-  font-size: 0.82rem; cursor: pointer;
-}
+.btn-del { padding: 0.55rem 0.75rem; border: 1px solid #fca5a5; border-radius: 7px; background: #fef2f2; color: #dc2626; font-size: 0.82rem; cursor: pointer; }
 .empty { text-align: center; padding: 2rem 1rem; color: #6b6b67; font-size: 0.9rem; }
 .loading { text-align: center; padding: 3rem 1rem; color: #6b6b67; }
-.cannot-card .card-header { background: #fef2f2; }
-
-/* Modal */
-.overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.45);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 100; padding: 1rem;
-}
+.cannot-card .card-header { background: #eff6ff; }
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 1rem; }
 .overlay.hidden { display: none; }
-.modal {
-  background: #fff; border-radius: 14px;
-  width: 100%; max-width: 420px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-}
-.modal-header {
-  padding: 1.1rem 1.25rem 0.9rem;
-  border-bottom: 1px solid #e0ddd6;
-  display: flex; justify-content: space-between; align-items: center;
-}
+.modal { background: #fff; border-radius: 14px; width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.25); }
+.modal-header { padding: 1.1rem 1.25rem 0.9rem; border-bottom: 1px solid #e0ddd6; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: #fff; z-index: 1; }
 .modal-header h2 { font-size: 1rem; font-weight: 600; }
 .close-btn { background: none; border: none; color: #6b6b67; font-size: 1.4rem; cursor: pointer; line-height: 1; padding: 0 0.2rem; }
 .modal-body { padding: 1.1rem 1.25rem; display: flex; flex-direction: column; gap: 0.9rem; }
 .field label { display: block; font-size: 0.8rem; font-weight: 500; color: #6b6b67; margin-bottom: 0.3rem; }
-.field input, .field textarea, .field select {
-  width: 100%; padding: 0.6rem 0.75rem;
-  border: 1px solid #e0ddd6; border-radius: 7px;
-  background: #f7f5f0; color: #1a1a18;
-  font-size: 0.9rem; font-family: inherit; outline: none;
-}
-.field input:focus, .field textarea:focus, .field select:focus { border-color: #2c6e49; }
+.field input, .field textarea, .field select { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid #e0ddd6; border-radius: 7px; background: #f7f5f0; color: #1a1a18; font-size: 0.9rem; font-family: inherit; outline: none; }
+.field input:focus, .field textarea:focus, .field select:focus { border-color: #2c6e49; background: #fff; }
 .field textarea { resize: vertical; min-height: 70px; }
 .type-toggle { display: flex; gap: 0.5rem; }
-.type-btn {
-  flex: 1; padding: 0.55rem;
-  border: 1px solid #e0ddd6; border-radius: 7px;
-  background: #f7f5f0; color: #6b6b67;
-  font-size: 0.82rem; cursor: pointer; font-weight: 500; text-align: center;
-}
+.type-btn { flex: 1; padding: 0.55rem; border: 1px solid #e0ddd6; border-radius: 7px; background: #f7f5f0; color: #6b6b67; font-size: 0.82rem; cursor: pointer; font-weight: 500; text-align: center; }
 .type-btn.sel-green { background: #e8f5ee; color: #1a5c36; border-color: #9dd4b3; }
-.type-btn.sel-red { background: #fef2f2; color: #dc2626; border-color: #fca5a5; }
+.type-btn.sel-blue { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
 .modal-footer { padding: 0 1.25rem 1.1rem; display: flex; gap: 0.5rem; }
 .btn-cancel { flex: 1; padding: 0.65rem; border: 1px solid #e0ddd6; border-radius: 7px; background: none; color: #6b6b67; font-size: 0.9rem; cursor: pointer; }
 .btn-submit { flex: 2; padding: 0.65rem; border: none; border-radius: 7px; background: #2c6e49; color: white; font-size: 0.9rem; font-weight: 500; cursor: pointer; }
@@ -144,24 +62,38 @@ main { padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
 .fields-driver.hidden { display: none; }
 .err { font-size: 0.8rem; color: #dc2626; margin-top: 0.2rem; display: none; }
 .err.show { display: block; }
+.pin-box { background: #fff8e1; border: 1px solid #fcd34d; border-radius: 8px; padding: 0.7rem 0.85rem; font-size: 0.82rem; color: #92400e; line-height: 1.5; margin-top: 0.25rem; }
+.pin-box strong { font-weight: 600; }
+.pin-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 200; padding: 1rem; }
+.pin-overlay.hidden { display: none; }
+.pin-modal { background: #fff; border-radius: 14px; width: 100%; max-width: 320px; padding: 1.5rem; box-shadow: 0 20px 60px rgba(0,0,0,0.25); }
+.pin-modal h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+.pin-modal p { font-size: 0.85rem; color: #6b6b67; margin-bottom: 1rem; line-height: 1.5; }
+.pin-modal input { width: 100%; padding: 0.65rem 0.75rem; border: 1px solid #e0ddd6; border-radius: 7px; font-size: 1.1rem; text-align: center; letter-spacing: 0.2em; outline: none; font-family: monospace; }
+.pin-modal input:focus { border-color: #2c6e49; }
+.pin-err { font-size: 0.8rem; color: #dc2626; margin-top: 0.4rem; display: none; text-align: center; }
+.pin-err.show { display: block; }
+.pin-actions { display: flex; gap: 0.5rem; margin-top: 1rem; }
+.pin-actions button { flex: 1; padding: 0.65rem; border-radius: 7px; font-size: 0.9rem; cursor: pointer; font-weight: 500; }
+.pin-cancel { border: 1px solid #e0ddd6; background: none; color: #6b6b67; }
+.pin-confirm { border: none; background: #2c6e49; color: white; }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>🐺 Covoiturage weekend scout</h1>
-  <p>Organisez les trajets ensemble — contactez-vous directement pour fixer le point de rendez-vous.</p>
+  <h1>🐺 Covoiturage weekend louveteaux</h1>
+  <p>Organisez les trajets pour le weekend — contactez-vous directement pour fixer un point de rendez-vous qui vous arrange.</p>
 </header>
 
 <div class="info-box">
-  <strong>Comment ça marche :</strong> ajoutez votre louveteau ci-dessous. Si vous pouvez conduire, indiquez le nombre de places et votre numéro. Si votre voiture est pleine, marquez-la comme complète. Contactez les autres parents par téléphone !
+  <strong>Comment ça marche :</strong> ajoutez votre louveteau ci-dessous en indiquant si vous pouvez conduire ou si vous cherchez un lift. Les parents conducteurs, pensez à marquer votre voiture comme <strong>complète</strong> une fois que vous avez vos passagers — ça évite d'être sollicité inutilement ! Contactez-vous directement par téléphone pour vous organiser et fixer un point de rendez-vous commun. 🚗
 </div>
 
 <main id="main">
   <div class="loading">Chargement…</div>
 </main>
 
-<!-- Modal -->
 <div class="overlay hidden" id="overlay">
   <div class="modal">
     <div class="modal-header">
@@ -178,7 +110,7 @@ main { padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
         <label>Votre situation *</label>
         <div class="type-toggle">
           <button class="type-btn sel-green" id="btn-driver" onclick="setType('driver')">🚗 Je peux conduire</button>
-          <button class="type-btn" id="btn-cannot" onclick="setType('cannot')">❌ Je ne peux pas</button>
+          <button class="type-btn" id="btn-cannot" onclick="setType('cannot')">🙋 Je cherche un lift</button>
         </div>
       </div>
       <div class="fields-driver" id="fields-driver">
@@ -194,15 +126,37 @@ main { padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
           </select>
         </div>
         <div class="field">
-          <label>Numéro de téléphone *</label>
+          <label>Votre numéro de téléphone *</label>
           <input type="tel" id="f-phone" placeholder="ex. 0470 00 00 00" maxlength="20">
           <div class="err" id="err-phone">Veuillez entrer votre numéro de téléphone.</div>
         </div>
       </div>
       <div class="fields-cannot" id="fields-cannot">
         <div class="field">
+          <label>Nombre d'enfants à transporter *</label>
+          <select id="f-children">
+            <option value="1">1 enfant</option>
+            <option value="2">2 enfants</option>
+            <option value="3">3 enfants</option>
+            <option value="4">4 enfants</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Votre numéro de téléphone *</label>
+          <input type="tel" id="f-phone-cannot" placeholder="ex. 0470 00 00 00" maxlength="20">
+          <div class="err" id="err-phone-cannot">Veuillez entrer votre numéro de téléphone.</div>
+        </div>
+        <div class="field">
           <label>Message (optionnel)</label>
-          <textarea id="f-note" placeholder="ex. Je travaille ce weekend, merci de contacter les autres parents." maxlength="200"></textarea>
+          <textarea id="f-note" placeholder="ex. Fratrie de 2, disponible dès 8h le samedi matin." maxlength="200"></textarea>
+        </div>
+      </div>
+      <div class="field">
+        <label>Choisissez un code PIN à 4 chiffres *</label>
+        <input type="number" id="f-pin" placeholder="ex. 1234" min="1000" max="9999">
+        <div class="err" id="err-pin">Veuillez entrer un code PIN à 4 chiffres.</div>
+        <div class="pin-box">
+          <strong>⚠️ Notez bien ce code !</strong> Il vous sera demandé pour modifier ou supprimer votre fiche. Personne d'autre ne peut toucher à votre annonce.
         </div>
       </div>
     </div>
@@ -213,7 +167,19 @@ main { padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
   </div>
 </div>
 
-<!-- Firebase SDK -->
+<div class="pin-overlay hidden" id="pin-overlay">
+  <div class="pin-modal">
+    <h3 id="pin-title">Confirmez votre identité</h3>
+    <p id="pin-desc">Entrez votre code PIN à 4 chiffres pour continuer.</p>
+    <input type="number" id="pin-input" placeholder="• • • •" min="1000" max="9999">
+    <div class="pin-err" id="pin-err">Code PIN incorrect. Réessayez.</div>
+    <div class="pin-actions">
+      <button class="pin-cancel" onclick="closePinModal()">Annuler</button>
+      <button class="pin-confirm" onclick="confirmPin()">Confirmer</button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getDatabase, ref, push, update, remove, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -232,7 +198,6 @@ main { padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
   const db = getDatabase(app);
   const entriesRef = ref(db, 'entries');
 
-  // Expose to global scope
   window._db = db;
   window._ref = ref;
   window._push = push;
@@ -240,7 +205,6 @@ main { padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
   window._remove = remove;
   window._entriesRef = entriesRef;
 
-  // Listen for changes
   onValue(entriesRef, (snapshot) => {
     const data = snapshot.val();
     const entries = data ? Object.entries(data).map(([id, v]) => ({ id, ...v })) : [];
@@ -252,11 +216,11 @@ main { padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
 
 <script>
   let currentType = 'driver';
+  let pendingAction = null;
 
   function esc(s) {
     return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
-
   function initials(name) {
     return name.trim().split(/\s+/).slice(0,2).map(w => w[0]).join('').toUpperCase();
   }
@@ -264,19 +228,20 @@ main { padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
   function setType(t) {
     currentType = t;
     document.getElementById('btn-driver').className = 'type-btn' + (t === 'driver' ? ' sel-green' : '');
-    document.getElementById('btn-cannot').className = 'type-btn' + (t === 'cannot' ? ' sel-red' : '');
+    document.getElementById('btn-cannot').className = 'type-btn' + (t === 'cannot' ? ' sel-blue' : '');
     document.getElementById('fields-driver').className = 'fields-driver' + (t === 'driver' ? '' : ' hidden');
     document.getElementById('fields-cannot').className = 'fields-cannot' + (t === 'cannot' ? ' visible' : '');
-    document.getElementById('modal-title').textContent = t === 'driver' ? 'Ajouter mon enfant' : 'Signaler que je ne peux pas conduire';
+    document.getElementById('modal-title').textContent = t === 'driver' ? 'Ajouter mon enfant (conducteur)' : 'Ajouter mon enfant (cherche un lift)';
   }
 
   function openModal() {
     document.getElementById('overlay').classList.remove('hidden');
     document.getElementById('f-name').value = '';
     document.getElementById('f-phone').value = '';
+    document.getElementById('f-phone-cannot').value = '';
     document.getElementById('f-note').value = '';
-    document.getElementById('err-name').classList.remove('show');
-    document.getElementById('err-phone').classList.remove('show');
+    document.getElementById('f-pin').value = '';
+    ['err-name','err-phone','err-phone-cannot','err-pin'].forEach(id => document.getElementById(id).classList.remove('show'));
     setType('driver');
     setTimeout(() => document.getElementById('f-name').focus(), 100);
   }
@@ -287,29 +252,45 @@ main { padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
 
   document.addEventListener('click', function(e) {
     if (e.target.id === 'overlay') closeModal();
+    if (e.target.id === 'pin-overlay') closePinModal();
   });
 
   function submitEntry() {
     const name = document.getElementById('f-name').value.trim();
-    const phone = document.getElementById('f-phone').value.trim();
+    const phone = currentType === 'driver'
+      ? document.getElementById('f-phone').value.trim()
+      : document.getElementById('f-phone-cannot').value.trim();
     const note = document.getElementById('f-note').value.trim();
     const seats = parseInt(document.getElementById('f-seats').value);
+    const children = parseInt(document.getElementById('f-children').value);
+    const pin = document.getElementById('f-pin').value.trim();
     let valid = true;
 
     if (!name) { document.getElementById('err-name').classList.add('show'); valid = false; }
     else { document.getElementById('err-name').classList.remove('show'); }
 
-    if (currentType === 'driver' && !phone) { document.getElementById('err-phone').classList.add('show'); valid = false; }
-    else { document.getElementById('err-phone').classList.remove('show'); }
+    if (!phone) {
+      const errId = currentType === 'driver' ? 'err-phone' : 'err-phone-cannot';
+      document.getElementById(errId).classList.add('show'); valid = false;
+    } else {
+      document.getElementById('err-phone').classList.remove('show');
+      document.getElementById('err-phone-cannot').classList.remove('show');
+    }
+
+    if (!pin || pin.length < 4 || pin.length > 4 || isNaN(pin)) {
+      document.getElementById('err-pin').classList.add('show'); valid = false;
+    } else { document.getElementById('err-pin').classList.remove('show'); }
 
     if (!valid) return;
 
     const entry = {
       name, type: currentType,
       seats: currentType === 'driver' ? seats : 0,
-      phone: currentType === 'driver' ? phone : '',
+      children: currentType === 'cannot' ? children : 0,
+      phone,
       note: currentType === 'cannot' ? note : '',
       full: false,
+      pin: pin,
       createdAt: Date.now()
     };
 
@@ -319,18 +300,53 @@ main { padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
     closeModal();
   }
 
-  function toggleFull(id, val) {
-    if (window._update && window._ref && window._db) {
-      window._update(window._ref(window._db, 'entries/' + id), { full: val });
-    }
+  function openPinModal(action) {
+    pendingAction = action;
+    document.getElementById('pin-input').value = '';
+    document.getElementById('pin-err').classList.remove('show');
+    document.getElementById('pin-title').textContent = action.type === 'delete' ? 'Supprimer cette fiche' : 'Modifier cette fiche';
+    document.getElementById('pin-desc').textContent = 'Entrez votre code PIN à 4 chiffres pour confirmer.';
+    document.getElementById('pin-overlay').classList.remove('hidden');
+    setTimeout(() => document.getElementById('pin-input').focus(), 100);
   }
 
-  function deleteEntry(id) {
-    if (!confirm('Supprimer cette entrée ?')) return;
-    if (window._remove && window._ref && window._db) {
-      window._remove(window._ref(window._db, 'entries/' + id));
-    }
+  function closePinModal() {
+    document.getElementById('pin-overlay').classList.add('hidden');
+    pendingAction = null;
   }
+
+  function confirmPin() {
+    if (!pendingAction) return;
+    const enteredPin = document.getElementById('pin-input').value.trim();
+    const entry = (window._entries || []).find(e => e.id === pendingAction.id);
+    if (!entry) { closePinModal(); return; }
+
+    if (enteredPin !== String(entry.pin)) {
+      document.getElementById('pin-err').classList.add('show');
+      document.getElementById('pin-input').value = '';
+      return;
+    }
+
+    if (pendingAction.type === 'delete') {
+      if (window._remove && window._ref && window._db) {
+        window._remove(window._ref(window._db, 'entries/' + pendingAction.id));
+      }
+    } else if (pendingAction.type === 'toggle') {
+      if (window._update && window._ref && window._db) {
+        window._update(window._ref(window._db, 'entries/' + pendingAction.id), { full: pendingAction.val });
+      }
+    }
+    closePinModal();
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !document.getElementById('pin-overlay').classList.contains('hidden')) {
+      confirmPin();
+    }
+  });
+
+  function askToggle(id, val) { openPinModal({ type: 'toggle', id, val }); }
+  function askDelete(id) { openPinModal({ type: 'delete', id }); }
 
   function render(entries) {
     const main = document.getElementById('main');
@@ -367,28 +383,34 @@ main { padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
               </div>
             </div>
             <div class="card-actions">
-              <button class="btn-full${full ? ' active' : ''}" onclick="toggleFull('${e.id}', ${!full})">
+              <button class="btn-full${full ? ' active' : ''}" onclick="askToggle('${e.id}', ${!full})">
                 ${full ? '✅ Marquer disponible' : '🚫 Voiture complète'}
               </button>
-              <button class="btn-del" onclick="deleteEntry('${e.id}')">🗑️</button>
+              <button class="btn-del" onclick="askDelete('${e.id}')">🗑️</button>
             </div>
           </div>`;
         }
       }
 
       if (cannots.length > 0) {
-        html += `<div class="section-title">❌ Ne peuvent pas amener leur enfant (${cannots.length})</div>`;
+        html += `<div class="section-title">🙋 Cherchent un lift (${cannots.length})</div>`;
         for (const e of cannots) {
           html += `
           <div class="card cannot-card">
             <div class="card-header">
               <div class="avatar cannot">${initials(e.name)}</div>
               <div class="card-name">${esc(e.name)}</div>
-              <span class="badge cannot">Besoin d'une place</span>
+              <span class="badge blue">${e.children > 1 ? e.children + ' enfants' : '1 enfant'}</span>
             </div>
-            ${e.note ? `<div class="card-body"><div class="note-text">${esc(e.note)}</div></div>` : ''}
+            <div class="card-body">
+              <div class="info-row">
+                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 10.07 19.79 19.79 0 0 1 1.63 1.44 2 2 0 0 1 3.6 0h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 7.91a16 16 0 0 0 6 6l.27-.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16z"/></svg>
+                <span>${esc(e.phone)}</span>
+              </div>
+              ${e.note ? `<div class="note-text">${esc(e.note)}</div>` : ''}
+            </div>
             <div class="card-actions">
-              <button class="btn-del" onclick="deleteEntry('${e.id}')">🗑️ Retirer</button>
+              <button class="btn-del" onclick="askDelete('${e.id}')">🗑️ Retirer</button>
             </div>
           </div>`;
         }
